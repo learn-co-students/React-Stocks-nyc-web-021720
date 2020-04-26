@@ -9,7 +9,9 @@ class MainContainer extends Component {
     this.state = {
       stocks: [],
       filteredStocks: [],
-      radioChecked: false
+      radioChecked: false,
+      radioChecked1: false,
+      portfolioStocks: []
     }
   }
   componentDidMount(){
@@ -33,35 +35,46 @@ class MainContainer extends Component {
       switch(sortType){
         case "Alphabetically":
           sortedStocks = this.state.stocks.sort((a,b) => a.name.localeCompare(b.name))
+          this.setState({filteredStocks: sortedStocks, radioChecked: !this.state.radioChecked})
           break;
         case "Price":
           sortedStocks = this.state.stocks.sort((a, b)=> a.price - b.price)
+          this.setState({filteredStocks: sortedStocks, radioChecked1: !this.state.radioChecked1})
           break;
         default:
           console.log('not a choice')
       }
-      this.setState({filteredStocks: sortedStocks, radioChecked: !this.state.radioChecked})
+      
     }
 
     buyStocks = (stock)=>{
+      this.setState({portfolioStocks: [...this.state.portfolioStocks, stock]})
+    }
 
+    sellStocks = stock =>{
+      this.setState({portfolioStocks: this.state.portfolioStocks.filter(s => s !== stock)})
     }
 
   render() {
     return (
       <div>
-        <SearchBar filterStocks={this.filterStocks} sortStocks={this.sortStocks}/>
+        <SearchBar 
+          filterStocks={this.filterStocks} 
+          sortStocks={this.sortStocks} 
+          radioChecked={this.state.radioChecked}
+          radioChecked1={this.state.radioChecked1}
+        />
 
           <div className="row">
             <div className="col-8">
-
-              <StockContainer stocks= {this.state.filteredStocks} handleClick={this.handleClick}/>
-
+              <StockContainer 
+                stocks= {this.state.filteredStocks} 
+                handleClick={this.handleClick} 
+                buyStocks={this.buyStocks}
+              />
             </div>
             <div className="col-4">
-
-              <PortfolioContainer/>
-
+              <PortfolioContainer stocks={this.state.portfolioStocks} sellStocks={this.sellStocks}/>
             </div>
           </div>
       </div>

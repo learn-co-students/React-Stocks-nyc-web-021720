@@ -9,7 +9,7 @@ class StockContainer extends Component {
       <div>
         <h2>Stocks</h2>
         {
-          this.props.stocks.map(stock => <Stock key={stock.id} stock={stock}/>)
+          this.props.stocks.map(stock => <Stock key={stock.id} stock={stock} buyStocks={this.props.buyStocks}/>)
         }
       </div>
     );

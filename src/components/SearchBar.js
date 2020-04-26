@@ -10,7 +10,7 @@ export default class SearchBar extends React.Component{
           Alphabetically
         </label>
         <label>
-          <input type="radio" value="Price" checked={this.props.radioChecked} onChange={(e)=> this.props.sortStocks(e.target.value)}/>
+          <input type="radio" value="Price" checked={this.props.radioChecked1} onChange={(e)=> this.props.sortStocks(e.target.value)}/>
           Price
         </label>
         <br/>
